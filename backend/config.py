@@ -6,3 +6,5 @@ db_url=os.getenv("DATABASE_URL")
 secret_key=os.getenv("SECRET_KEY")
 algorithm=os.getenv("ALGORITHM")
 access_token_expire_time=60
+
+api_key=os.getenv("GROQ_API_KEY")

@@ -23,7 +23,7 @@ def login(user: UserLogin, db:Session=Depends(get_db)):
 
     if error:
         return HTTPException(status_code=400, detail=error)
-    return {"access_token":token}
+    return {token}
 
 
 @router.get("/profile")
