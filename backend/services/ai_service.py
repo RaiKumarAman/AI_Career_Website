@@ -42,3 +42,40 @@ def generate_psychometric_questions():
         return []
 
 # print(generate_psychometric_questions())
+
+TEST_PROMPT = """
+You are an exam generator.
+
+Generate 5 MCQ questions for subject: {subject}
+
+Level: Class 11-12 (India)
+
+Each question must include:
+- question
+- 4 options
+- correct answer
+
+Return STRICT JSON:
+[
+  {{
+    "question": "...",
+    "options": ["A", "B", "C", "D"],
+    "answer": "correct option"
+  }}
+]
+
+ONLY JSON. No explanation.
+"""
+
+def generate_questions_for_subject(subject: str):
+    prompt = TEST_PROMPT.format(subject=subject)
+
+    response = llm.chat.completions.create(
+      model="openai/gpt-oss-120b",
+      messages=[{"role":"user","content":prompt}]
+    )
+
+    try:
+        return json.loads(response.choices[0].message.content)
+    except:
+        return []
