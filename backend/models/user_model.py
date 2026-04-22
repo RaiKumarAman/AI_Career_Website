@@ -10,4 +10,4 @@ class User(Base):
     email=Column(String(100), unique=True, index=True)
     password_hash=Column(String)
     language=Column(String(10), default="en")
-    created_At=Column(TIMESTAMP, default=datetime.utcnow())
+    created_at=Column(TIMESTAMP, default=datetime.utcnow())
