@@ -79,3 +79,53 @@ def generate_questions_for_subject(subject: str):
         return json.loads(response.choices[0].message.content)
     except:
         return []
+
+
+RECOMMENDATION_PROMPT = """
+You are a career advisor for Indian students.
+
+Input:
+Top Interests: {top_1}, {top_2}
+Score: {score}%
+
+Subjects: {subjects}
+
+Tasks:
+1. Suggest ONE primary career
+2. Suggest 2 secondary career options
+3. Suggest relevant Indian exams
+4. Explain WHY this career suits the student
+
+Respond STRICT JSON:
+{{
+  "career": "...",
+  "secondary_careers": ["...", "..."],
+  "exams": ["...", "..."],
+  "feedback": "..."
+}}
+
+ONLY JSON.
+"""
+
+def generate_recommendation(top_1, top_2, score, subjects):
+    prompt = RECOMMENDATION_PROMPT.format(
+        top_1=top_1,
+        top_2=top_2,
+        score=score,
+        subjects=", ".join(subjects)
+    )
+
+    response = llm.chat.completions.create(
+      model="openai/gpt-oss-120b",
+      messages=[{"role":"user","content":prompt}]
+    )
+
+    import json, re
+
+    text = response.choices[0].message.content.strip()
+    text = re.sub(r"```json|```", "", text)
+
+    try:
+        return json.loads(text)
+    except:
+        return {}
