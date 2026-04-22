@@ -1,8 +1,5 @@
 venv
 __pycache__
-<<<<<<< Updated upstream
 backend/.env
 .env
-=======
 .env
->>>>>>> Stashed changes
