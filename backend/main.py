@@ -36,6 +36,7 @@ def home():
     5. Subject Mapping Ready
     6. Test Generation Ready
     7. Evaluation Ready
+    8. Recommendation Ready
     """}
 
 
