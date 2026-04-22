@@ -12,9 +12,20 @@ from controllers.subject_controller import router as subject_router
 from controllers.test_controller import router as test_router
 from controllers.evaluation_controller import router as evaluation_router
 from controllers.recommendation_controller import router as rec_router
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app=FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://fluffy-space-system-x6qqj7rgw4w36qj5-5500.app.github.dev"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -25,6 +36,9 @@ app.include_router(subject_router)
 app.include_router(test_router)
 app.include_router(evaluation_router)
 app.include_router(rec_router)
+
+
+
 
 @app.get("/")
 def home():
