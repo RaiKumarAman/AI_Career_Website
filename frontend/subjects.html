@@ -1,8 +1,36 @@
-<h2>Suggested Subjects</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Subjects - AI Career Advisor</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-<div id="subjects"></div>
+<nav class="navbar">
+    <div class="navbar-brand">AI Career Advisor</div>
+    <div class="navbar-nav">
+        <span id="user-name"></span>
+        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+    </div>
+</nav>
 
-<button onclick="generateTest()">Start Test</button>
+<div class="container">
+    <div class="page-header">
+        <h1>Select Subjects</h1>
+        <p>Choose the subjects you'd like to be evaluated on</p>
+    </div>
+
+    <div class="card" style="max-width: 600px;">
+        <div class="checkbox-list" id="subjects"></div>
+
+        <button class="btn btn-block mt-24" onclick="generateTest()">Start Evaluation Test</button>
+    </div>
+</div>
 
 <script src="js/api.js"></script>
 <script src="js/subjects.js"></script>
+
+</body>
+</html>

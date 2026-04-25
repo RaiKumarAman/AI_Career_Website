@@ -1,33 +1,3 @@
-async function saveProfile() {
-    const stream = document.getElementById("stream").value;
-    const class_level = document.getElementById("class").value;
-    const language = document.getElementById("language").value;
-
-    if (!stream || !class_level) {
-        alert("Please select both stream and class level");
-        return;
-    }
-
-    try {
-        const res = await fetch(BASE_URL + "/user/profile", {
-            method: "POST",
-            headers: authHeaders(),
-            body: JSON.stringify({stream, class_level, language})
-        });
-
-        if (!res.ok) {
-            const error = await res.json();
-            alert("Error: " + (error.detail || "Failed to save profile"));
-            return;
-        }
-
-        window.location.href = "psychometric.html";
-    } catch (err) {
-        console.error("ERROR:", err);
-        alert("Failed to save profile");
-    }
-}
-
 async function signup() {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -70,17 +40,3 @@ async function signup() {
         alert("Backend not reachable. Please check your connection.");
     }
 }
-
-function logout() {
-    localStorage.removeItem("token");
-    window.location.href = "index.html";
-}
-
-function displayUserName() {
-    const userNameEl = document.getElementById("user-name");
-    if (userNameEl) {
-        userNameEl.textContent = "User";
-    }
-}
-
-displayUserName();

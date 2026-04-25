@@ -1,6 +1,35 @@
-<h2>Career Recommendation</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results & Recommendations - AI Career Advisor</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-<div id="result"></div>
+<nav class="navbar">
+    <div class="navbar-brand">AI Career Advisor</div>
+    <div class="navbar-nav">
+        <span id="user-name"></span>
+        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Your Results & Career Recommendations</h1>
+    </div>
+
+    <div id="result" style="max-width: 900px; margin: 0 auto;"></div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2024 AI Career Advisor. All rights reserved.</p>
+</footer>
 
 <script src="js/api.js"></script>
 <script src="js/result.js"></script>
+
+</body>
+</html>

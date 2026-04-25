@@ -27,4 +27,8 @@ def read(
     if not profile:
         raise HTTPException(status_code=404, detail="Profile not found")
 
-    return profile
+    return {
+        "profile_exists": bool(profile),
+        "profile": profile
+    }
+

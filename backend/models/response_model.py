@@ -7,6 +7,7 @@ class Response(Base):
     __tablename__ = "responses"
 
     id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
     test_id = Column(Integer, ForeignKey("tests.id"))
 
     user_answers = Column(JSONB)

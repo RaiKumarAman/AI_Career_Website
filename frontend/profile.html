@@ -1,22 +1,63 @@
-<h2>Profile</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - AI Career Advisor</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-<select id="stream">
-  <option>Science</option>
-  <option>Commerce</option>
-  <option>Arts</option>
-</select>
+<nav class="navbar">
+    <div class="navbar-brand">AI Career Advisor</div>
+    <div class="navbar-nav">
+        <span id="user-name"></span>
+        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+    </div>
+</nav>
 
-<select id="class">
-  <option>12th</option>
-  <option>Passed</option>
-</select>
+<div class="container">
+    <div class="page-header">
+        <h1>Complete Your Profile</h1>
+        <p>Help us understand your background to provide better recommendations</p>
+    </div>
 
-<select id="language">
-  <option value="en">English</option>
-  <option value="hi">Hindi</option>
-</select>
+    <div class="card" style="max-width: 500px;">
+        <div class="form-group">
+            <label for="stream">Stream</label>
+            <select id="stream">
+                <option value="">Select your stream</option>
+                <option value="Science">Science</option>
+                <option value="Commerce">Commerce</option>
+                <option value="Arts">Arts</option>
+            </select>
+        </div>
 
-<button onclick="saveProfile()">Next</button>
+        <div class="form-group">
+            <label for="class">Class / Education Level</label>
+            <select id="class">
+                <option value="">Select your class</option>
+                <option value="10th">10th</option>
+                <option value="11th">11th</option>
+                <option value="12th">12th</option>
+                <option value="Passed">Passed 12th</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="language">Preferred Language</label>
+            <select id="language">
+                <option value="en">English</option>
+                <option value="hi">हिंदी (Hindi)</option>
+            </select>
+        </div>
+
+        <button class="btn btn-block" onclick="saveProfile()">Continue</button>
+    </div>
+</div>
 
 <script src="js/api.js"></script>
 <script src="js/profile.js"></script>
+
+</body>
+</html>

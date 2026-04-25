@@ -20,7 +20,7 @@ app=FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://fluffy-space-system-x6qqj7rgw4w36qj5-5500.app.github.dev"
+        "http://127.0.0.1:5500"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -29,7 +29,7 @@ app.add_middleware(
 
 Base.metadata.create_all(bind=engine)
 
-app.include_router(auth_router)
+app.include_router(auth_router, prefix="/api/auth")
 app.include_router(user_router)
 app.include_router(psychometric_router)
 app.include_router(subject_router)

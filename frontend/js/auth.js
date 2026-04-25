@@ -1,34 +1,44 @@
-async function login() {
-    const username = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    async function login() {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
 
-    const formData = new URLSearchParams();
-    formData.append("username", username);
-    formData.append("password", password);
-
-    try {
-        const res = await fetch("https://fluffy-space-system-x6qqj7rgw4w36qj5-8000.app.github.dev/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: formData
-        });
-
-        const data = await res.json();
-        console.log("LOGIN RESPONSE:", data);
-
-        if (!res.ok) {
-            alert(data.detail || "Login failed");
+        if (!email || !password) {
+            alert("Please enter both email and password");
             return;
         }
 
-        localStorage.setItem("token", data.access_token);
+        try {
+            const res = await fetch(BASE_URL + "/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
 
-        window.location.href = "profile.html";
+            const data = await res.json();
+            console.log("LOGIN RESPONSE:", data);
 
-    } catch (err) {
-        console.error("ERROR:", err);
-        alert("Backend not reachable");
+            if (!res.ok) {
+                alert(data.detail || "Login failed");
+                return;
+            }
+
+            localStorage.setItem("token", data.access_token);
+            window.location.href = "profile.html";
+
+        } catch (err) {
+            console.error("ERROR:", err);
+            alert("Backend not reachable. Please check your connection.");
+        }
     }
-}
+
+    function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "index.html";
+    }
+
+    
