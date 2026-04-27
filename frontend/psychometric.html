@@ -9,27 +9,33 @@
 <body>
 
 <nav class="navbar">
-    <div class="navbar-brand">AI Career Advisor</div>
+    <div class="navbar-brand" data-key="title">AI Career Advisor</div>
     <div class="navbar-nav">
         <span id="user-name"></span>
-        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        <select id="languageSelector" style="padding: 8px 12px; border-radius: 4px; border: 1px solid #ddd; cursor: pointer;">
+            <option value="English">English</option>
+            <option value="Hindi">हिंदी</option>
+        </select>
+        <button class="btn btn-secondary" onclick="logout()" data-key="logout">Logout</button>
     </div>
 </nav>
 
 <div class="container">
     <div class="page-header">
-        <h1>Psychometric Assessment</h1>
-        <p>Answer these questions honestly to help us understand your personality and interests.</p>
+        <h1 data-key="psychometricTest">Psychometric Assessment</h1>
+        <p data-key="psychometricDescription">Answer these questions honestly to help us understand your personality and interests.</p>
     </div>
 
     <div id="questions"></div>
 
     <div class="flex-between gap-12" style="margin-top: 32px; max-width: 1100px; margin-left: auto; margin-right: auto;">
-        <button class="btn btn-secondary" onclick="goBack()">Back</button>
-        <button class="btn btn-success" onclick="submitTest()">Submit Assessment</button>
+        <button class="btn btn-secondary" onclick="goBack()" data-key="back">Back</button>
+        <button class="btn btn-success" onclick="submitTest()" data-key="submitAnswers">Submit Assessment</button>
     </div>
 </div>
 
+<script src="js/translations.js"></script>
+<script src="js/language.js"></script>
 <script src="js/api.js"></script>
 <script src="js/psychometric.js"></script>
 

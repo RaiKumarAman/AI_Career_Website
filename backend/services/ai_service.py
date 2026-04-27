@@ -11,8 +11,16 @@ llm = OpenAI(
     base_url=os.getenv("GROQ_BASE_URL")
 )
 
-PSYCHOMETRIC_PROMPT = """
+# Language templates for prompts
+LANGUAGE_INSTRUCTIONS = {
+    "English": "Respond ONLY in English. Use clear, professional language.",
+    "Hindi": "आप केवल हिंदी में जवाब दें। सरल, स्पष्ट हिंदी का उपयोग करें।"
+}
+
+PSYCHOMETRIC_PROMPT_TEMPLATE = """
 Generate 18 psychometric questions for students.
+
+LANGUAGE: {language_instruction}
 
 Requirements:
 - Cover all RIASEC categories:
@@ -20,20 +28,25 @@ Requirements:
 - Each question must include:
   id, question, type
 
-Return STRICT JSON only:
+Return STRICT JSON only (with English keys):
 [
-  {
+  {{
     "id": 1,
     "question": "...",
     "type": "realistic"
-  }
+  }}
 ]
+
+IMPORTANT: Keep JSON keys in English. Only translate the question text.
 """
 
-def generate_psychometric_questions():
+def generate_psychometric_questions(language: str = "English"):
+    lang_instruction = LANGUAGE_INSTRUCTIONS.get(language, LANGUAGE_INSTRUCTIONS["English"])
+    prompt = PSYCHOMETRIC_PROMPT_TEMPLATE.format(language_instruction=lang_instruction)
+    
     response = llm.chat.completions.create(
         model="openai/gpt-oss-120b",
-        messages=[{"role":"user","content":PSYCHOMETRIC_PROMPT}]
+        messages=[{"role":"user","content":prompt}]
     )
 
     try:
@@ -41,21 +54,22 @@ def generate_psychometric_questions():
     except:
         return []
 
-# print(generate_psychometric_questions())
 
-TEST_PROMPT = """
-You are an exam generator.
+TEST_PROMPT_TEMPLATE = """
+You are an exam generator for Indian students.
+
+LANGUAGE: {language_instruction}
 
 Generate 5 MCQ questions for subject: {subject}
 
 Level: Class 11-12 (India)
 
 Each question must include:
-- question
-- 4 options
+- question (in {language})
+- 4 options (in {language})
 - correct answer
 
-Return STRICT JSON:
+Return STRICT JSON (with English keys):
 [
   {{
     "question": "...",
@@ -64,11 +78,16 @@ Return STRICT JSON:
   }}
 ]
 
-ONLY JSON. No explanation.
+IMPORTANT: Keep JSON keys in English. Only translate question and options to {language}.
 """
 
-def generate_questions_for_subject(subject: str):
-    prompt = TEST_PROMPT.format(subject=subject)
+def generate_questions_for_subject(subject: str, language: str = "English"):
+    lang_instruction = LANGUAGE_INSTRUCTIONS.get(language, LANGUAGE_INSTRUCTIONS["English"])
+    prompt = TEST_PROMPT_TEMPLATE.format(
+        language_instruction=lang_instruction,
+        subject=subject,
+        language=language
+    )
 
     response = llm.chat.completions.create(
       model="openai/gpt-oss-120b",
@@ -81,22 +100,23 @@ def generate_questions_for_subject(subject: str):
         return []
 
 
-RECOMMENDATION_PROMPT = """
+RECOMMENDATION_PROMPT_TEMPLATE = """
 You are a career advisor for Indian students.
+
+LANGUAGE: {language_instruction}
 
 Input:
 Top Interests: {top_1}, {top_2}
 Score: {score}%
-
 Subjects: {subjects}
 
 Tasks:
-1. Suggest ONE primary career
-2. Suggest 2 secondary career options
-3. Suggest relevant Indian exams
-4. Explain WHY this career suits the student
+1. Suggest ONE primary career (in {language})
+2. Suggest 2 secondary career options (in {language})
+3. Suggest relevant Indian exams (keep exam names in English or standard format)
+4. Explain WHY this career suits the student (in {language})
 
-Respond STRICT JSON:
+Respond STRICT JSON (with English keys):
 {{
   "career": "...",
   "secondary_careers": ["...", "..."],
@@ -104,15 +124,18 @@ Respond STRICT JSON:
   "feedback": "..."
 }}
 
-ONLY JSON.
+IMPORTANT: Keep JSON keys in English. Translate career names, feedback, and recommendations to {language}.
 """
 
-def generate_recommendation(top_1, top_2, score, subjects):
-    prompt = RECOMMENDATION_PROMPT.format(
+def generate_recommendation(top_1, top_2, score, subjects, language: str = "English"):
+    lang_instruction = LANGUAGE_INSTRUCTIONS.get(language, LANGUAGE_INSTRUCTIONS["English"])
+    prompt = RECOMMENDATION_PROMPT_TEMPLATE.format(
+        language_instruction=lang_instruction,
         top_1=top_1,
         top_2=top_2,
         score=score,
-        subjects=", ".join(subjects)
+        subjects=", ".join(subjects),
+        language=language
     )
 
     response = llm.chat.completions.create(

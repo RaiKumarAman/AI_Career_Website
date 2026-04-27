@@ -44,7 +44,8 @@ async function generateTest() {
     }
 
     try {
-        const res = await fetch(BASE_URL + "/test/generate", {
+        const language = getLanguageParam();
+        const res = await fetch(BASE_URL + "/test/generate?language=" + language, {
             method: "POST",
             headers: authHeaders(),
             body: JSON.stringify({subjects: selectedSubjects})
@@ -67,6 +68,7 @@ async function generateTest() {
 
 function logout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("test");
     window.location.href = "index.html";
 }
 

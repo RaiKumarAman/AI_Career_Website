@@ -9,26 +9,32 @@
 <body>
 
 <nav class="navbar">
-    <div class="navbar-brand">AI Career Advisor</div>
+    <div class="navbar-brand" data-key="title">AI Career Advisor</div>
     <div class="navbar-nav">
         <span id="user-name"></span>
-        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        <select id="languageSelector" style="padding: 8px 12px; border-radius: 4px; border: 1px solid #ddd; cursor: pointer;">
+            <option value="English">English</option>
+            <option value="Hindi">हिंदी</option>
+        </select>
+        <button class="btn btn-secondary" onclick="logout()" data-key="logout">Logout</button>
     </div>
 </nav>
 
 <div class="container">
     <div class="page-header">
-        <h1>Select Subjects</h1>
-        <p>Choose the subjects you'd like to be evaluated on</p>
+        <h1 data-key="selectSubjects">Select Subjects</h1>
+        <p data-key="chooseSubjectsForTest">Choose the subjects you'd like to be evaluated on</p>
     </div>
 
     <div class="card" style="max-width: 600px;">
         <div class="checkbox-list" id="subjects"></div>
 
-        <button class="btn btn-block mt-24" onclick="generateTest()">Start Evaluation Test</button>
+        <button class="btn btn-block mt-24" onclick="generateTest()" data-key="proceedToTest">Start Evaluation Test</button>
     </div>
 </div>
 
+<script src="js/translations.js"></script>
+<script src="js/language.js"></script>
 <script src="js/api.js"></script>
 <script src="js/subjects.js"></script>
 

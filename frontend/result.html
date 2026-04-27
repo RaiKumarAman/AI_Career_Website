@@ -9,25 +9,31 @@
 <body>
 
 <nav class="navbar">
-    <div class="navbar-brand">AI Career Advisor</div>
+    <div class="navbar-brand" data-key="title">AI Career Advisor</div>
     <div class="navbar-nav">
         <span id="user-name"></span>
-        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        <select id="languageSelector" style="padding: 8px 12px; border-radius: 4px; border: 1px solid #ddd; cursor: pointer;">
+            <option value="English">English</option>
+            <option value="Hindi">हिंदी</option>
+        </select>
+        <button class="btn btn-secondary" onclick="logout()" data-key="logout">Logout</button>
     </div>
 </nav>
 
 <div class="container">
     <div class="page-header">
-        <h1>Your Results & Career Recommendations</h1>
+        <h1 data-key="resultsAndRecommendations">Your Results & Career Recommendations</h1>
     </div>
 
     <div id="result" style="max-width: 900px; margin: 0 auto;"></div>
 </div>
 
 <footer class="footer">
-    <p>&copy; 2024 AI Career Advisor. All rights reserved.</p>
+    <p><span data-key="allRightsReserved">&copy; 2024 AI Career Advisor. All rights reserved.</span></p>
 </footer>
 
+<script src="js/translations.js"></script>
+<script src="js/language.js"></script>
 <script src="js/api.js"></script>
 <script src="js/result.js"></script>
 

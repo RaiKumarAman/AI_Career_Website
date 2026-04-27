@@ -1,7 +1,7 @@
 async function saveProfile() {
     const stream = document.getElementById("stream").value;
     const class_level = document.getElementById("class").value;
-    const language = document.getElementById("language").value;
+    const language = getLanguageParam();
 
     if (!stream || !class_level) {
         alert("Please select both stream and class level");

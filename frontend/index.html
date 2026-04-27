@@ -9,35 +9,41 @@
 <body>
 
 <nav class="navbar">
-    <div class="navbar-brand">AI Career Advisor</div>
+    <div class="navbar-brand" data-key="title">AI Career Advisor</div>
     <div class="navbar-nav">
-        <a href="index.html">Login</a>
-        <a href="#about">About</a>
+        <select id="languageSelector" style="padding: 8px 12px; border-radius: 4px; border: 1px solid #ddd; cursor: pointer;">
+            <option value="English">English</option>
+            <option value="Hindi">हिंदी</option>
+        </select>
+        <a href="index.html" data-key="signIn">Sign In</a>
+        <a href="#about" data-key="about">About</a>
     </div>
 </nav>
 
 <div class="container">
     <div class="card" style="max-width: 400px;">
-        <h2>Welcome Back</h2>
+        <h2 data-key="welcomeBack">Welcome Back</h2>
         
         <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="Enter your email">
+            <label for="email" data-key="emailAddress">Email Address</label>
+            <input type="email" id="email" data-key="enterEmail" placeholder="Enter your email">
         </div>
 
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password">
+            <label for="password" data-key="password">Password</label>
+            <input type="password" id="password" data-key="enterPassword" placeholder="Enter your password">
         </div>
 
-        <button class="btn btn-block" onclick="login()">Sign In</button>
+        <button class="btn btn-block" onclick="login()" data-key="signIn">Sign In</button>
 
         <p class="text-center text-muted mt-20">
-            Don't have an account? <a href="signup.html">Sign up here</a>
+            <span data-key="dontHaveAccount">Don't have an account?</span> <a href="signup.html" data-key="signUpHere">Sign up here</a>
         </p>
     </div>
 </div>
 
+<script src="js/translations.js"></script>
+<script src="js/language.js"></script>
 <script src="js/api.js"></script>
 <script src="js/auth.js"></script>
 

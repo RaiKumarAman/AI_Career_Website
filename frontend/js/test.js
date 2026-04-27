@@ -69,4 +69,20 @@ async function submitTest() {
     }
 }
 
+function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("test");
+    localStorage.removeItem("response");
+    localStorage.removeItem("testId");
+    window.location.href = "index.html";
+}
+
+function displayUserName() {
+    const userNameEl = document.getElementById("user-name");
+    if (userNameEl) {
+        userNameEl.textContent = "User";
+    }
+}
+
 loadTest();
+displayUserName();

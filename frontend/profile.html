@@ -9,53 +9,51 @@
 <body>
 
 <nav class="navbar">
-    <div class="navbar-brand">AI Career Advisor</div>
+    <div class="navbar-brand" data-key="title">AI Career Advisor</div>
     <div class="navbar-nav">
         <span id="user-name"></span>
-        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        <select id="languageSelector" style="padding: 8px 12px; border-radius: 4px; border: 1px solid #ddd; cursor: pointer;">
+            <option value="English">English</option>
+            <option value="Hindi">हिंदी</option>
+        </select>
+        <button class="btn btn-secondary" onclick="logout()" data-key="logout">Logout</button>
     </div>
 </nav>
 
 <div class="container">
     <div class="page-header">
-        <h1>Complete Your Profile</h1>
-        <p>Help us understand your background to provide better recommendations</p>
+        <h1 data-key="completeProfile">Complete Your Profile</h1>
+        <p data-key="helpUnderstand">Help us understand your background to provide better recommendations</p>
     </div>
 
     <div class="card" style="max-width: 500px;">
         <div class="form-group">
-            <label for="stream">Stream</label>
+            <label for="stream" data-key="stream">Stream</label>
             <select id="stream">
-                <option value="">Select your stream</option>
-                <option value="Science">Science</option>
-                <option value="Commerce">Commerce</option>
-                <option value="Arts">Arts</option>
+                <option value="" data-key="selectStream">Select your stream</option>
+                <option value="Science" data-key="science">Science</option>
+                <option value="Commerce" data-key="commerce">Commerce</option>
+                <option value="Arts" data-key="arts">Arts</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="class">Class / Education Level</label>
+            <label for="class" data-key="classLevel">Class / Education Level</label>
             <select id="class">
-                <option value="">Select your class</option>
-                <option value="10th">10th</option>
-                <option value="11th">11th</option>
-                <option value="12th">12th</option>
-                <option value="Passed">Passed 12th</option>
+                <option value="" data-key="selectClass">Select your class</option>
+                <option value="10th" data-key="tenth">10th</option>
+                <option value="11th" data-key="eleventh">11th</option>
+                <option value="12th" data-key="twelfth">12th</option>
+                <option value="Passed" data-key="passed">Passed 12th</option>
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="language">Preferred Language</label>
-            <select id="language">
-                <option value="en">English</option>
-                <option value="hi">हिंदी (Hindi)</option>
-            </select>
-        </div>
-
-        <button class="btn btn-block" onclick="saveProfile()">Continue</button>
+        <button class="btn btn-block" onclick="saveProfile()" data-key="continue">Continue</button>
     </div>
 </div>
 
+<script src="js/translations.js"></script>
+<script src="js/language.js"></script>
 <script src="js/api.js"></script>
 <script src="js/profile.js"></script>
 

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from db.database import get_db
@@ -13,13 +13,20 @@ router = APIRouter(prefix="/psychometric", tags=["Psychometric"])
 
 # ✅ STEP 1: Generate Questions
 @router.get("/generate")
-def generate_test(current_user = Depends(get_current_user)):
-    questions = generate_psychometric_questions()
+def generate_test(
+    language: str = Query("English", description="Language for questions: English or Hindi"),
+    current_user = Depends(get_current_user)
+):
+    # Validate language
+    if language not in ["English", "Hindi"]:
+        language = "English"
+    
+    questions = generate_psychometric_questions(language=language)
 
     if not questions:
         raise HTTPException(status_code=500, detail="Failed to generate questions")
 
-    return {"questions": questions}
+    return {"questions": questions, "language": language}
 
 
 # ✅ STEP 2: Submit Answers

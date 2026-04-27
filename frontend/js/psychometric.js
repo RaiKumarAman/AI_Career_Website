@@ -2,7 +2,8 @@ let questions = [];
 
 async function loadQuestions() {
     try {
-        const res = await fetch(BASE_URL + "/psychometric/generate", {
+        const language = getLanguageParam();
+        const res = await fetch(BASE_URL + "/psychometric/generate?language=" + language, {
             headers: authHeaders()
         });
 

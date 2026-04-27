@@ -10,3 +10,8 @@ function authHeaders() {
         "Authorization": "Bearer " + getToken()
     };
 }
+
+// Get current language for API requests
+function getLanguageParam() {
+    return languageManager?.getLanguage() || localStorage.getItem('language') || 'English';
+}

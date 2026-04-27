@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from db.database import get_db
@@ -15,11 +15,16 @@ router = APIRouter(prefix="/test", tags=["Test"])
 @router.post("/generate")
 def create_test(
     data: TestCreate,
+    language: str = Query("English", description="Language for questions: English or Hindi"),
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
     """Generate test questions for selected subjects"""
-    questions = generate_test(data.subjects)
+    # Validate language
+    if language not in ["English", "Hindi"]:
+        language = "English"
+    
+    questions = generate_test(data.subjects, language=language)
 
     if not questions:
         raise HTTPException(status_code=500, detail="Failed to generate test")
@@ -36,7 +41,8 @@ def create_test(
 
     return {
         "test_id": test.id,
-        "questions": questions
+        "questions": questions,
+        "language": language
     }
 
 
@@ -80,10 +86,15 @@ def submit_test(
 @router.get("/results/{test_id}")
 def get_test_results(
     test_id: int,
+    language: str = Query("English", description="Language for recommendations: English or Hindi"),
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
     """Get test results and career recommendations"""
+    # Validate language
+    if language not in ["English", "Hindi"]:
+        language = "English"
+    
     test = db.query(Test).filter(
         Test.id == test_id,
         Test.user_id == current_user.id
@@ -103,8 +114,8 @@ def get_test_results(
     ).first()
     
     if not recommendation:
-        # Generate new recommendation
-        rec_data = get_recommendations(test_id, db)
+        # Generate new recommendation with language
+        rec_data = get_recommendations(test_id, db, language=language)
         
         if rec_data:
             recommendation = Recommendation(
@@ -127,5 +138,6 @@ def get_test_results(
         "career": recommendation.career if recommendation else "",
         "secondary_careers": recommendation.secondary_careers if recommendation else [],
         "exams": recommendation.exams if recommendation else [],
-        "feedback": recommendation.feedback if recommendation else ""
+        "feedback": recommendation.feedback if recommendation else "",
+        "language": language
     }

@@ -1,11 +1,17 @@
 from services.ai_service import generate_questions_for_subject, generate_recommendation
 
-def generate_test(subjects: list):
-
+def generate_test(subjects: list, language: str = "English"):
+    """
+    Generate test questions for given subjects in specified language.
+    
+    Args:
+        subjects: List of subject names
+        language: Language for questions (English or Hindi)
+    """
     all_questions = []
 
     for subject in subjects:
-        questions = generate_questions_for_subject(subject)
+        questions = generate_questions_for_subject(subject, language=language)
 
         for q in questions:
             q["subject"] = subject  
@@ -74,9 +80,14 @@ def evaluate_test(questions: list, user_answers: dict) -> dict:
     }
 
 
-def get_recommendations(test_id: int, db) -> dict:
+def get_recommendations(test_id: int, db, language: str = "English") -> dict:
     """
-    Generate career recommendations based on test performance.
+    Generate career recommendations based on test performance in specified language.
+    
+    Args:
+        test_id: ID of the test
+        db: Database session
+        language: Language for recommendations (English or Hindi)
     """
     from models.test_model import Test
     from models.response_model import Response
@@ -98,11 +109,13 @@ def get_recommendations(test_id: int, db) -> dict:
         top_1=top_subject,
         top_2=subjects[1] if len(subjects) > 1 else "Science",
         score=int(score),
-        subjects=subjects
+        subjects=subjects,
+        language=language
     )
     
     return {
         **recommendation_data,
         "score": int(score),
-        "passed": passed
+        "passed": passed,
+        "language": language
     }

@@ -8,7 +8,8 @@ async function loadResult() {
     }
 
     try {
-        const res = await fetch(BASE_URL + `/test/results/${testId}`, {
+        const language = getLanguageParam();
+        const res = await fetch(BASE_URL + `/test/results/${testId}?language=${language}`, {
             headers: authHeaders()
         });
 
@@ -89,4 +90,20 @@ function downloadResults() {
     alert("Download feature coming soon! Test ID: " + testId);
 }
 
+function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("test");
+    localStorage.removeItem("response");
+    localStorage.removeItem("testId");
+    window.location.href = "index.html";
+}
+
+function displayUserName() {
+    const userNameEl = document.getElementById("user-name");
+    if (userNameEl) {
+        userNameEl.textContent = "User";
+    }
+}
+
 loadResult();
+displayUserName();

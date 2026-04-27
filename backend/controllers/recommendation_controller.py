@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from db.database import get_db
@@ -18,9 +18,14 @@ router = APIRouter(prefix="/recommend", tags=["Recommendation"])
 @router.post("/")
 def recommend(
     data: RecommendationRequest,
+    language: str = Query("English", description="Language for recommendations: English or Hindi"),
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
+    # Validate language
+    if language not in ["English", "Hindi"]:
+        language = "English"
+    
     # 🔹 Get test
     test = db.query(Test).filter(Test.id == data.test_id).first()
     if not test:
@@ -39,12 +44,13 @@ def recommend(
     if not psych:
         raise HTTPException(status_code=400, detail="Psychometric not done")
 
-    # 🔹 Generate AI recommendation
+    # 🔹 Generate AI recommendation with language
     result = generate_recommendation(
         psych.top_1,
         psych.top_2,
         response.score,
-        test.subjects
+        test.subjects,
+        language=language
     )
 
     if not result:
@@ -62,4 +68,7 @@ def recommend(
     db.add(rec)
     db.commit()
 
-    return result
+    return {
+        **result,
+        "language": language
+    }
